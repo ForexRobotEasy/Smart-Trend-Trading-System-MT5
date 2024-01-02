@@ -1,0 +1,89 @@
+
+//+------------------------------------------------------------------+
+//|                                              Smart Trend Trading System MT5 |
+//|                                           forexroboteasy.com |
+//|                                           Forex Robot Easy Team |
+//+------------------------------------------------------------------+
+
+// Include necessary libraries
+#include <Trade\Trade.mqh>
+#include <Indicators\Indicators.mqh>
+
+// Define constants
+#define SYMBOL_NAME 'EURUSD'
+#define STOP_LOSS 50
+#define TAKE_PROFIT 100
+#define LOT_SIZE 0.01
+
+// Create an instance of the trade class
+CTrade trade;
+
+//+------------------------------------------------------------------+
+//|                                                 OnInit |
+//+------------------------------------------------------------------+
+void OnInit()
+{
+   // Initialize the trade class
+   trade.Init(Symbol(), 0);
+}
+
+//+------------------------------------------------------------------+
+//|                                                 OnTick |
+//+------------------------------------------------------------------+
+void OnTick()
+{
+   // Get the current bid price
+   double bid = SymbolInfoDouble(SYMBOL_NAME, SYMBOL_BID);
+
+   // Check the trend following strategy
+   if (isTrendFollowing(bid))
+   {
+      // Place a buy trade
+      trade.Buy(LOT_SIZE, bid, bid - STOP_LOSS, bid + TAKE_PROFIT, '');
+   }
+   else if (isReversal(bid))
+   {
+      // Place a sell trade
+      trade.Sell(LOT_SIZE, bid, bid + STOP_LOSS, bid - TAKE_PROFIT, '');
+   }
+   else if (isScalping(bid))
+   {
+      // Place a buy trade
+      trade.Buy(LOT_SIZE, bid, bid - STOP_LOSS, bid + TAKE_PROFIT, '');
+   }
+}
+
+//+------------------------------------------------------------------+
+//|                                                 isTrendFollowing |
+//+------------------------------------------------------------------+
+bool isTrendFollowing(double price)
+{
+   // Implement the trend following strategy here
+   // Return true if the criteria for trend following is met, otherwise return false
+}
+
+//+------------------------------------------------------------------+
+//|                                                 isReversal |
+//+------------------------------------------------------------------+
+bool isReversal(double price)
+{
+   // Implement the reversal strategy here
+   // Return true if the criteria for reversal is met, otherwise return false
+}
+
+//+------------------------------------------------------------------+
+//|                                                 isScalping |
+//+------------------------------------------------------------------+
+bool isScalping(double price)
+{
+   // Implement the scalping strategy here
+   // Return true if the criteria for scalping is met, otherwise return false
+}
+
+//+------------------------------------------------------------------+
+//|                                                 OnDeinit |
+//+------------------------------------------------------------------+
+void OnDeinit(const int reason)
+{
+   // Perform any necessary cleanup tasks before the program terminates
+}
